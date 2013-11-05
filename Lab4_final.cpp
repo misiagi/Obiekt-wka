@@ -1,3 +1,6 @@
+// Lab4.cpp : Defines the entry point for the console application.
+//
+
 #include "stdafx.h"
 #include <iostream>
 #include <cstdlib>
@@ -94,28 +97,25 @@ void showTab(Room*** tab){
 		for(int i=0;i<3;i++){
 			for(int k=0;k<3;k++){
 				
-				int a=i+1;
-				int b=k+1;
-
 				if (tab[i][k]->getwskN()==NULL){
-					tabF[a-1][b]='X';
-					if (tab[i][k]->getwskW()==NULL) tabF[a-1][b-1]='X';
-					if (tab[i][k]->getwskE()==NULL) tabF[a-1][b+1]='X';
+					tabF[i][k+1]='X';
+					if (tab[i][k]->getwskW()==NULL) tabF[i][k]='X';
+					if (tab[i][k]->getwskE()==NULL) tabF[i][k+2]='X';
 				};
 
 
 				if (tab[i][k]->getwskS()==NULL){
-					tabF[a+1][b]='X';
-					if (tab[i][k]->getwskW()==NULL) tabF[a+1][b-1]='X';
-					if (tab[i][k]->getwskE()==NULL) tabF[a+1][b+1]='X';
+					tabF[i+2][k+1]='X';
+					if (tab[i][k]->getwskW()==NULL) tabF[i+2][k]='X';
+					if (tab[i][k]->getwskE()==NULL) tabF[i+2][k+2]='X';
 				};
 
 
-				if (tab[i][k]->getwskW()==NULL)	tabF[a][b-1]='X';
-				if (tab[i][k]->getwskE()==NULL) tabF[a][b+1]='X';
+				if (tab[i][k]->getwskW()==NULL)	tabF[i+1][k]='X';
+				if (tab[i][k]->getwskE()==NULL) tabF[i+1][k+2]='X';
 
-				if(tab[i][k]->getVisit()==false) tabF[a][b] = '0';
-					else tabF[a][b] ='1';
+				if(tab[i][k]->getVisit()==false) tabF[i+1][k+1] = '0';
+					else tabF[i+1][k+1] ='1';
 
 			};
 		};
