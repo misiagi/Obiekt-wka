@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <string>
 #include <iostream>
+#include <ctime>
 
 using namespace std;
 
@@ -13,17 +14,21 @@ struct wezel{
 	int key;
 };
 
-class slownik{
+class Lista{
 private:
 	wezel *head;
 	wezel *tail;
 
 public:
-	slownik();
+	Lista();
 	int addNew(int);
+	void addLos(int);
+	int Search(int);
+	int Del(int);
+	void Display();
 };
 
-slownik::slownik(){
+Lista::Lista(){
 	head=new wezel;
 	tail=new wezel;
 	head->next=NULL;
@@ -32,7 +37,7 @@ slownik::slownik(){
 	tail->prev=NULL;
 };
 
-int slownik::addNew(int v_key){
+int Lista::addNew(int v_key){
 
 	if(head->next==NULL)					//PUSTA LISTA
 	{
@@ -74,11 +79,83 @@ int slownik::addNew(int v_key){
 	}
 };
 
+void Lista::addLos(int ilosc){
+	
+	time_t t;
+	srand((unsigned)time(&t));
+	int v_key;
+
+	for(;;){
+		if(ilosc==0) return;
+		else
+		{
+			v_key=(rand()%(10+ilosc));
+				if(addNew(v_key)==1) ilosc--;
+		};
+	};
+};
+
+int Lista::Search(int v_key){
+	if (head->next == tail)
+		{cout<<"Lista jest pusta"; return 0;} //PUSTA LISTA
+	wezel * now=head->next;
+	for(;;){
+		if(now->key == v_key) return 1;			// ZNALEZIONO KLUCZ
+		if(now->key > v_key)  return 0;			// LISTA POSORTOWANA WIEC JUZ NIE BEDZIE
+		if(now->next == tail)  return 0;			// KONIEC LISTY
+
+		now=now->next;
+	};
+};
+
+int Lista::Del(int v_key){
+
+	if (head->next == tail)
+		{cout<<"Lista jest pusta"; return 0;} //PUSTA LISTA
+	wezel * now=head->next;
+	for(;;){
+		if(now->key == v_key)
+		{
+			now->prev->next=now->next;		// poprzedni na nastepny
+			now->next->prev=now->prev;		// nastepny na poprzedni
+			delete now;
+			return 1;
+		};
+		if(now->key > v_key) return 0;		// Brak elementu
+		if(now->next == tail) return 0;		// KONIEC LISTY
+
+		now=now->next;
+	};
+};
+
+void Lista::Display(){
+
+	if(head->next == tail)
+	{
+		cout<<"Lista jest pusta";	return;
+	};
+	wezel * now=head->next;
+
+	for(;;){
+		cout<<now->key<<" ";
+		if(now->next == tail) {cout<<endl; return;}
+		now=now->next;
+	};
+};
+
 int _tmain(int argc, _TCHAR* argv[])
 {
-
-	slownik s1;
+	Lista s1;
+	s1.addLos(5);
+	s1.Display();
 	s1.addNew(2);
+	s1.Display();
+	s1.Del(2);
+	s1.Display();
+	s1.Del(2);
+	s1.Display();
+	s1.addLos(3);
+	s1.Display();
 
 	getchar();
 }
