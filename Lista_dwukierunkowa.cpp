@@ -26,6 +26,7 @@ public:
 	int Search(int);
 	int Del(int);
 	void Display();
+	void backDisplay();
 };
 
 Lista::Lista(){
@@ -46,6 +47,7 @@ int Lista::addNew(int v_key){
 		head->next->prev=head;
 		tail->prev=head->next;
 		head->next->key=v_key;
+		cout<<"Dodano element "<<v_key<<endl;
 		return 1;
 	};
 	
@@ -54,8 +56,8 @@ int Lista::addNew(int v_key){
 	{
 		if (now->key>=v_key)		//AKTUALNY KLUCZ WIEKSZY
 		{
-			if (now->key == v_key)   //KLUCZ ISTNIEJE
-			return 0;
+			if (now->key == v_key) //KLUCZ ISTNIEJE
+			{cout<<"Probowano dodac "<<v_key<<" ale on juz istnieje"<<endl; return 0;}
 				
 			now->prev->next=new wezel;				//tworzenie nowego wezła
 			now->prev->next->prev=now->prev;		//poprzedni wskazuje na nowy
@@ -63,6 +65,7 @@ int Lista::addNew(int v_key){
 			now->prev=now->prev->next;				//aktualny wskazuje na nowy
 
 			now->prev->key=v_key;
+			cout<<"Dodano element "<<v_key<<endl;;
 			return 1;
 		}
 		if (now->next == tail)						//AKTUALNY KLUCZ MNIEJSZY
@@ -72,6 +75,7 @@ int Lista::addNew(int v_key){
 			tail->prev=now->next;					//ogon na nowy
 			tail->prev->next=tail;					//nowy na ogon
 			now->next->key=v_key;
+			cout<<"Dodano element "<<v_key<<endl;;
 			return 1;
 		}
 
@@ -100,9 +104,9 @@ int Lista::Search(int v_key){
 		{cout<<"Lista jest pusta"; return 0;} //PUSTA LISTA
 	wezel * now=head->next;
 	for(;;){
-		if(now->key == v_key) return 1;			// ZNALEZIONO KLUCZ
-		if(now->key > v_key)  return 0;			// LISTA POSORTOWANA WIEC JUZ NIE BEDZIE
-		if(now->next == tail)  return 0;			// KONIEC LISTY
+		if(now->key == v_key) {cout<<"Znaleziono element "<<v_key<<endl; return 1;}			// ZNALEZIONO KLUCZ
+		if(now->key > v_key)  {cout<<"Brak elementu "<<v_key<<endl; return 0;}			// LISTA POSORTOWANA WIEC JUZ NIE BEDZIE
+		if(now->next == tail) {cout<<"Brak elementu "<<v_key<<endl; return 0;}			// KONIEC LISTY
 
 		now=now->next;
 	};
@@ -119,10 +123,11 @@ int Lista::Del(int v_key){
 			now->prev->next=now->next;		// poprzedni na nastepny
 			now->next->prev=now->prev;		// nastepny na poprzedni
 			delete now;
+			cout<<"Usunieto element "<<v_key<<endl;
 			return 1;
 		};
-		if(now->key > v_key) return 0;		// Brak elementu
-		if(now->next == tail) return 0;		// KONIEC LISTY
+		if(now->key > v_key) {cout<<"Brak elementu "<<v_key<<endl; return 0;}		// Brak elementu
+		if(now->next == tail) {cout<<"Brak elementu "<<v_key<<endl; return 0;}	// KONIEC LISTY
 
 		now=now->next;
 	};
@@ -143,6 +148,21 @@ void Lista::Display(){
 	};
 };
 
+void Lista::backDisplay(){
+
+	if(head->next == tail)
+	{
+		cout<<"Lista jest pusta"; return;
+	};
+	wezel * now=tail->prev;
+
+	for(;;){
+		cout<<now->key<<" ";
+		if(now->prev == head){cout<<endl; return;}
+		now=now->prev;
+	};
+};
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 	Lista s1;
@@ -156,7 +176,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	s1.Display();
 	s1.addLos(3);
 	s1.Display();
-
+	s1.Search(6);
+	s1.backDisplay();
 	getchar();
 }
 
