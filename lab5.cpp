@@ -205,52 +205,45 @@ Matrix::Matrix(string file){
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-     /*   int _w=3,_k=5;
-        Matrix m1(_w,_k);
-        m1.showMatrix();
-		cout<< endl;
-
-        m1.changeCell(1,3,1);
-		m1.changeCell(1,2,3);//Zmiana komórki
-		cout<<endl;
-       
-		m1.showMatrix();
-        cout<<endl;
-        
-		cout<<m1.getCell(1,3);	//Wys. komórki
-		cout<< endl;
-		cout<<endl;
-		
-		cout<<m1.getLine(1);	//Wys. wiersza
-		cout<<endl;
-		cout<<endl;
-		
-		cout<<m1.getColumn(3);	//Wys. kolumny
-		cout<<endl;
-		cout<<endl;
-
-		cout<<m1.getMatrix();	//Wys. macierzy
-		cout<<endl;
-		cout<<endl;
-
-		m1.addValue(1);	//Dodanie wartości
-		m1.showMatrix();
-        cout<<endl;  
-
-		//m1.makeTrans();	//Macierz transponowana
-		//m1.showMatrix();
-		//cout<<endl;
-
-		m1.Save("macierz.txt");*/
-
-	Matrix m1("macierz.txt");
+     
+	Matrix m1("macierz.txt");		//wczytanie macierzy 4x3
 	m1.showMatrix();
+	cout<<endl;
+	cout<<endl;
 
-	
+	m1.changeCell(2,2,3);			// zmiana wartosci macierzy
+	m1.changeCell(4,1,8);
+
+	m1.showMatrix();
+	cout<<endl;
+	cout<<endl;
+
+	m1.Save("macierz1.txt");	//zapis macierzy do pliku
+
+	Matrix m2("macierz1.txt");	// nowa macierz z pliku
+	m2.showMatrix();
+	cout<<endl;
+	cout<<endl;
+
+	m2.makeTrans();				// macierz transponowana
+	m2.showMatrix();
+	cout<<endl;
+	cout<<endl;
+
+	m2.Save("macierz2.txt");	// zapis macierzy do pliku
+
+	Matrix m3("macierz2.txt");	// noqa macierz z pliku
+	m3.showMatrix();
+	cout<<endl;
+	cout<<endl;
+
+	m3.addValue(1);				//dodanie wartosci do elementow macierzy
+	m3.showMatrix();
+	cout<<endl;
+	cout<<endl;
+
+	m3.Save("macierz3.txt");	//zapis macierzy do pliku
 
         getchar();
         getchar();
 }
-
-
-
